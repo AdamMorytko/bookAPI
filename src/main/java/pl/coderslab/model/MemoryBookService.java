@@ -14,9 +14,9 @@ public class MemoryBookService implements BookService{
     public MemoryBookService() {
         books = new ArrayList<>();
         books.add(new Book(++nextId, "9788324631766", "Thinking in Java", "Bruce Eckel", "Helion", "programming"));
-        books.add(new Book(++nextId, "9788324627738", "Rusz glowa	Java.", "Sierra Kathy, Bates Bert", "Helion",
+        books.add(new Book(++nextId, "9788324627738", "Rusz glowa Java.", "Sierra Kathy, Bates Bert", "Helion",
                 "programming"));
-        books.add(new Book(++nextId, "9780130819338", "Java 2. Podstawy", "Cay	Horstmann, Gary Cornell", "Helion",
+        books.add(new Book(++nextId, "9780130819338", "Java 2. Podstawy", "Cay Horstmann, Gary Cornell", "Helion",
                 "programming"));
     }
 
@@ -29,6 +29,11 @@ public class MemoryBookService implements BookService{
     public Optional<Book> getBookById(Long id) {
         return books.stream()
                 .filter(b->b.getId().equals(id)).findFirst();
+    }
+
+    @Override
+    public void deleteBook(long id) {
+        books.removeIf(b -> b.getId().equals(id));
     }
 
     @Override

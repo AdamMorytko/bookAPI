@@ -37,8 +37,8 @@ public class BookController {
         bookService.updateBook(book);
     }
 
-    @DeleteMapping("")
-    void deleteBook(@RequestParam long id) {
+    @DeleteMapping("/{id}")
+    void deleteBook(@PathVariable long id) {
         logger.info("Deleting book: {}", bookService.getBookById(id));
         bookService.deleteBook(id);
     }
