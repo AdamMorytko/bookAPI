@@ -7,6 +7,7 @@ import pl.coderslab.model.Book;
 import pl.coderslab.model.BookService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/books")
@@ -23,6 +24,12 @@ public class BookController {
         List<Book> list = bookService.getBooks();
         logger.info("Returning books: {}",list);
         return list;
+    }
+
+    @GetMapping("/{id}")
+    Book getBook(@PathVariable long id){
+        Optional<Book> book = bookService.getBookById(id);
+        return book.orElse(null);
     }
 
     @PostMapping("")
