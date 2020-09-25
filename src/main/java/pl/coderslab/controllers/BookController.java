@@ -2,12 +2,9 @@ package pl.coderslab.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.model.Book;
 import pl.coderslab.model.BookService;
-import pl.coderslab.model.MemoryBookService;
 
 import java.util.List;
 
@@ -23,7 +20,27 @@ public class BookController {
 
     @GetMapping("")
     List<Book> getList() {
-        return bookService.getBooks();
+        List<Book> list = bookService.getBooks();
+        logger.info("Returning books: {}",list);
+        return list;
+    }
+
+    @PostMapping("")
+    void addBook(@RequestBody Book book) {
+        bookService.addBook(book);
+        logger.info("Created new book");
+    }
+
+    @PutMapping("")
+    void updateBook(@RequestBody Book book) {
+        logger.info("Updating book: {} with {}",bookService.getBookById(book.getId()),book);
+        bookService.updateBook(book);
+    }
+
+    @DeleteMapping("")
+    void deleteBook(@RequestParam long id) {
+        logger.info("Deleting book: {}", bookService.getBookById(id));
+        bookService.deleteBook(id);
     }
 
 
