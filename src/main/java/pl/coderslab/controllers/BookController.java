@@ -1,7 +1,10 @@
 package pl.coderslab.controllers;
 
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.model.Book;
 import pl.coderslab.model.BookService;
@@ -9,21 +12,21 @@ import pl.coderslab.model.BookService;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/books")
 public class BookController {
     Logger logger = LoggerFactory.getLogger(BookController.class);
     private BookService bookService;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService){
         this.bookService = bookService;
     }
 
     @GetMapping("")
-    List<Book> getList() {
-        List<Book> list = bookService.getBooks();
-        logger.info("Returning books: {}",list);
-        return list;
+    public String showPosts(Model model) {
+        List<Book> books = bookService.getBooks();
+        model.addAttribute("books", books);
+        return "books/all";
     }
 
     @GetMapping("/{id}")
